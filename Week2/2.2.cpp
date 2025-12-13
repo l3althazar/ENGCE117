@@ -10,13 +10,10 @@ int main() {
     fgets(text, 50, stdin);
     
     int i = 0;
-    while (text[i] != '\0') {
-        if (text[i] == '\n') {
-            text[i] = '\0';
-            break;
-        }
+    while (text[i] != '\n' && text[i] != '\0') {
         i++;
     }
+    text[i] = '\0';
     
     out = reverse(text);
     printf("%s", out);
@@ -26,21 +23,20 @@ int main() {
 }
 
 char* reverse(char str1[]) {
-    int m = 0;
-    while (str1[m] != '\0') {
-        m++;
+    int len = 0;
+    while (str1[len] != '\0') {
+        len++;
     }
     
-    char *str2 = (char*)malloc(m + 1);
-    
-    int x = 0;
-    int y = m - 1;
-    while (y >= 0) {
-        str2[x] = str1[y];
-        x++;
-        y--;
+    char *str2 = (char*)malloc(len + 1);
+    if (str2 == NULL) {
+        return NULL;
     }
-    str2[x] = '\0';
+    
+    for (int i = 0; i < len; i++) {
+        str2[i] = str1[len - 1 - i];
+    }
+    str2[len] = '\0';
     
     return str2;
 }
