@@ -1,38 +1,40 @@
-#include <stdio.h>
+#include<stdio.h>
 
-void explode(char str1[], char splitter, char str2[][10], int *count);
+void explode(char a[],char b,char c[][10],int*d);
 
-int main() {
-    char out[20][10];
-    int num;
+int main(){
+    char res[20][10];
+    int n;
     
-    explode("I/Love/You", '/', out, &num);
+    explode("I/Love/You",'/',res,&n);
     
-    for (int i = 0; i < num; i++) {
-        printf("str2[%d] = \"%s\"\n", i, out[i]);
+    int i;
+    for(i=0;i<n;i++){
+        printf("str2[%d] = \"%s\"\n",i,res[i]);
     }
-    printf("count = %d\n", num);
+    printf("count = %d\n",n);
     
     return 0;
 }
 
-void explode(char str1[], char splitter, char str2[][10], int *count) {
-    int x = 0;
-    int y = 0;
-    int z = 0;
+void explode(char a[],char b,char c[][10],int*d){
+    int i=0;
+    int j=0;
+    int k=0;
     
-    while (str1[x] != '\0') {
-        if (str1[x] == splitter) {
-            str2[y][z] = '\0';
-            y++;
-            z = 0;
-        } else {
-            str2[y][z] = str1[x];
-            z++;
+    while(a[i]!='\0'){
+        if(a[i]==b){
+            c[j][k]='\0';
+            j++;
+            k=0;
         }
-        x++;
+        else{
+            c[j][k]=a[i];
+            k++;
+        }
+        i++;
     }
     
-    str2[y][z] = '\0';
-    *count = y + 1;
+    c[j][k]='\0';
+    *d=j+1;
 }
