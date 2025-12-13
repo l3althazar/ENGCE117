@@ -1,42 +1,44 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-char* reverse(char str1[]);
+char* reverse(char a[]);
 
-int main() {
-    char text[50];
-    char *out;
+int main(){
+    char txt[50];
+    char*ans;
     
-    fgets(text, 50, stdin);
+    fgets(txt,50,stdin);
     
-    int i = 0;
-    while (text[i] != '\n' && text[i] != '\0') {
-        i++;
+    int p=0;
+    while(txt[p]!='\n'&&txt[p]!='\0'){
+        p++;
     }
-    text[i] = '\0';
+    txt[p]='\0';
     
-    out = reverse(text);
-    printf("%s", out);
+    ans=reverse(txt);
+    printf("%s",ans);
     
-    free(out);
+    if(ans!=NULL){
+        free(ans);
+    }
     return 0;
 }
 
-char* reverse(char str1[]) {
-    int len = 0;
-    while (str1[len] != '\0') {
-        len++;
+char* reverse(char a[]){
+    int cnt=0;
+    while(a[cnt]!='\0'){
+        cnt++;
     }
     
-    char *str2 = (char*)malloc(len + 1);
-    if (str2 == NULL) {
-        return NULL;
-    }
+    char*b=(char*)malloc(cnt+1);
+    if(b==NULL)return NULL;
     
-    for (int i = 0; i < len; i++) {
-        str2[i] = str1[len - 1 - i];
+    int i=0;
+    while(i<cnt){
+        b[i]=a[cnt-1-i];
+        i++;
     }
-    str2[len] = '\0';
+    b[cnt]='\0';
     
-    return str2;
+    return b;
 }
