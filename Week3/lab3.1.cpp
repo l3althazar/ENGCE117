@@ -1,31 +1,28 @@
-#include<stdio.h>
+#include <stdio.h>
 
-struct student{
+struct student {
     char name[20];
     int age;
     char sex;
     float gpa;
 };
 
-void upgrade(struct student c);
+void upgrade(struct student child);
 
-int main(){
-    struct student a;
-    a.sex='M';
-    a.gpa=3.00;
-    
-    upgrade(a);
-    
-    printf("%.2f",a.gpa);
-    
+int main() {
+    struct student aboy;
+    aboy.sex = 'M';
+    aboy.gpa = 3.00;
+    upgrade(aboy);
+    printf("%.2f", aboy.gpa);
     return 0;
 }
 
-void upgrade(struct student c){
-    if(c.sex=='M'){
-        c.gpa=c.gpa*1.10;
+void upgrade(struct student child) {
+    if(child.sex == 'M') {
+        child.gpa = child.gpa + (child.gpa * 10 / 100);
     }
-    if(c.sex=='F'){
-        c.gpa=c.gpa*1.20;
+    else if(child.sex == 'F') {
+        child.gpa = child.gpa + (child.gpa * 20 / 100);
     }
 }
