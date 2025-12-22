@@ -10,44 +10,60 @@ struct studentNode {
     struct studentNode *next;
 };
 
-void SaveNode(struct studentNode *child, const char n[], int a, char s, float g);
-void GoNext1(struct studentNode **walk);
+void SaveNode(struct studentNode *node, const char studentName[], int studentAge, char studentGender, float studentGPA);
+void GoNext1(struct studentNode **currentNode);
 
 int main() {
-    struct studentNode *start, *now1, **now2;
-    start = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start, "one", 6, 'M', 3.11);
+    struct studentNode *headNode, *currentNode, **pointerToCurrentNode;
     
-    start->next = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start->next, "two", 8, 'F', 3.22);
+    headNode = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode, "one", 6, 'M', 3.11);
     
-    start->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start->next->next, "three", 10, 'M', 3.33);
-
-    start->next->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start->next->next->next, "four", 12, 'F', 3.44);
+    headNode->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode->next, "two", 8, 'F', 3.22);
     
-    start->next->next->next->next = NULL;
+    headNode->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode->next->next, "three", 10, 'M', 3.33);
 
-    now1 = start;
-    now2 = &start;
+    headNode->next->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode->next->next->next, "four", 12, 'F', 3.44);
+    
+    headNode->next->next->next->next = NULL;
 
-    GoNext1(&now1);
-    printf("%s\n", now1->name);
+    currentNode = headNode;
+    pointerToCurrentNode = &headNode;
 
+    GoNext1(&currentNode);
+    printf("Current node name after GoNext1: %s\n", currentNode->name);
+
+    struct studentNode *tempNode = headNode;
+    while (tempNode != NULL) {
+        struct studentNode *nodeToFree = tempNode;
+        tempNode = tempNode->next;
+        free(nodeToFree);
+    }
+    
     return 0;
 }
 
-void SaveNode(struct studentNode *child, const char n[], int a, char s, float g) {
-    strcpy(child->name, n);
-    child->age = a;
-    child->sex = s;
-    child->gpa = g;
+void SaveNode(struct studentNode *node, const char studentName[], int studentAge, char studentGender, float studentGPA) {
+    strcpy(node->name, studentName);
+    node->age = studentAge;
+    node->sex = studentGender;
+    node->gpa = studentGPA;
 }
 
-void GoNext1(struct studentNode **walk) {
-    if((*walk)->next != NULL) {
-        *walk = (*walk)->next;
-        printf("%s %d %c %.2f\n", (*walk)->name, (*walk)->age, (*walk)->sex, (*walk)->gpa);
+void GoNext1(struct studentNode **currentNode) {
+    if ((*currentNode)->next != NULL) {
+        *currentNode = (*currentNode)->next;
+        
+        printf("Moved to next node. Node details:\n");
+        printf("Name: %s\n", (*currentNode)->name);
+        printf("Age: %d\n", (*currentNode)->age);
+        printf("Gender: %c\n", (*currentNode)->sex);
+        printf("GPA: %.2f\n\n", (*currentNode)->gpa);
+    }
+    else {
+        printf("Cannot move to next node. Current node is the last node.\n");
     }
 }
