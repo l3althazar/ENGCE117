@@ -10,45 +10,88 @@ struct studentNode {
     struct studentNode *next;
 };
 
-void SaveNode(struct studentNode *child, const char n[], int a, char s, float g);
-void GoNext2(struct studentNode ***walk);
+void SaveNode(struct studentNode *studentNode, const char studentName[], int studentAge, char studentGender, float studentGPA);
+void GoNext2(struct studentNode ***triplePointer);
 
 int main() {
-    struct studentNode *start, *now1, **now2;
+    struct studentNode *headNode;
+    struct studentNode *firstPointer;
+    struct studentNode **secondPointer;
     
-    start = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start, "one", 6, 'M', 3.11);
+    headNode = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode, "one", 6, 'M', 3.11);
     
-    start->next = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start->next, "two", 8, 'F', 3.22);
+    headNode->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode->next, "two", 8, 'F', 3.22);
     
-    start->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start->next->next, "three", 10, 'M', 3.33);
+    headNode->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode->next->next, "three", 10, 'M', 3.33);
 
-    start->next->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
-    SaveNode(start->next->next->next, "four", 12, 'F', 3.44);
+    headNode->next->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    SaveNode(headNode->next->next->next, "four", 12, 'F', 3.44);
     
-    start->next->next->next->next = NULL;
+    headNode->next->next->next->next = NULL;
 
-    now1 = start;
-    now2 = &start;
+    firstPointer = headNode;
+    secondPointer = &headNode;
 
-    GoNext2(&now2);
-    printf("%s\n", (*now2)->name);
+    GoNext2(&secondPointer);
+    printf("Current node name: %s\n", (*secondPointer)->name);
 
+    struct studentNode *currentNode = headNode;
+    struct studentNode *nextNode;
+    
+    while (currentNode != NULL) {
+        nextNode = currentNode->next;
+        free(currentNode);
+        currentNode = nextNode;
+    }
+    
     return 0;
 }
 
-void SaveNode(struct studentNode *child, const char n[], int a, char s, float g) {
-    strcpy(child->name, n);
-    child->age = a;
-    child->sex = s;
-    child->gpa = g;
+void SaveNode(struct studentNode *studentNode, const char studentName[], int studentAge, char studentGender, float studentGPA) {
+    strcpy(studentNode->name, studentName);
+    studentNode->age = studentAge;
+    studentNode->sex = studentGender;
+    studentNode->gpa = studentGPA;
 }
 
-void GoNext2(struct studentNode ***walk) {
-    if((**walk) != NULL && (**walk)->next != NULL) {
-        *walk = &((**walk)->next);
-        printf("%s %d %c %.2f\n", (**walk)->name, (**walk)->age, (**walk)->sex, (**walk)->gpa);
+void GoNext2(struct studentNode ***triplePointer) {
+    struct studentNode **doublePointer;
+    struct studentNode *singlePointer;
+    
+    doublePointer = *triplePointer;
+    
+    if (doublePointer == NULL) {
+        printf("Error: Double pointer is NULL.\n");
+        return;
+    }
+    
+    singlePointer = *doublePointer;
+    
+    if (singlePointer == NULL) {
+        printf("Error: Single pointer is NULL.\n");
+        return;
+    }
+    
+    if (singlePointer->next != NULL) {
+        *triplePointer = &(singlePointer->next);
+        
+        struct studentNode **newDoublePointer;
+        struct studentNode *newSinglePointer;
+        
+        newDoublePointer = *triplePointer;
+        newSinglePointer = *newDoublePointer;
+        
+        printf("Successfully moved to next node.\n");
+        printf("Node Information:\n");
+        printf("Name: %s\n", newSinglePointer->name);
+        printf("Age: %d\n", newSinglePointer->age);
+        printf("Gender: %c\n", newSinglePointer->sex);
+        printf("GPA: %.2f\n\n", newSinglePointer->gpa);
+    }
+    else {
+        printf("Error: Cannot move to next node. This is the last node.\n");
     }
 }
