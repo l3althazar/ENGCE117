@@ -11,99 +11,119 @@ struct studentNode {
 };
 
 void ShowAll(struct studentNode *walk);
-struct studentNode *AddNode(struct studentNode **start, const char n[], int a, float g);
-void InsNode(struct studentNode *now, const char n[], int a, float g);
-void GoBack(struct studentNode **now);
-void DelNode(struct studentNode **now);
+struct studentNode *AddNode(struct studentNode **start, const char name[], int age, float gpa);
+void InsNode(struct studentNode *currentNode, const char name[], int age, float gpa);
+void GoBack(struct studentNode **currentNode);
+void DelNode(struct studentNode **currentNode);
 
 int main() {
-    struct studentNode *start, *now;
-    start = NULL;
-    now = AddNode(&start, "one", 6, 3.11); ShowAll(start);
-    now = AddNode(&start, "two", 8, 3.22); ShowAll(start);
-    InsNode(now, "three", 10, 3.33); ShowAll(start);
-    InsNode(now, "four", 12, 3.44); ShowAll(start);
-    GoBack(&now);
-    DelNode(&now); ShowAll(start);
-    DelNode(&now); ShowAll(start);
-    DelNode(&now); ShowAll(start);
+    struct studentNode *start = NULL;
+    struct studentNode *currentNode = NULL;
+    
+    currentNode = AddNode(&start, "one", 6, 3.11);
+    ShowAll(start);
+    
+    currentNode = AddNode(&start, "two", 8, 3.22);
+    ShowAll(start);
+    
+    InsNode(currentNode, "three", 10, 3.33);
+    ShowAll(start);
+    
+    InsNode(currentNode, "four", 12, 3.44);
+    ShowAll(start);
+    
+    GoBack(&currentNode);
+    
+    DelNode(&currentNode);
+    ShowAll(start);
+    
+    DelNode(&currentNode);
+    ShowAll(start);
+    
+    DelNode(&currentNode);
+    ShowAll(start);
+    
     return 0;
 }
 
 void ShowAll(struct studentNode *walk) {
-    while(walk != NULL) {
+    while (walk != NULL) {
         printf("%s ", walk->name);
         walk = walk->next;
     }
     printf("\n");
 }
 
-struct studentNode *AddNode(struct studentNode **start, const char n[], int a, float g) {
-    struct studentNode *newNode, *lastNode;
+struct studentNode *AddNode(struct studentNode **start, const char name[], int age, float gpa) {
+    struct studentNode *newNode = (struct studentNode*)malloc(sizeof(struct studentNode));
+    struct studentNode *lastNode = *start;
     
-    newNode = (struct studentNode*)malloc(sizeof(struct studentNode));
-    strcpy(newNode->name, n);
-    newNode->age = a;
-    newNode->gpa = g;
+    strcpy(newNode->name, name);
+    newNode->age = age;
+    newNode->gpa = gpa;
     newNode->next = NULL;
     newNode->back = NULL;
     
-    if(*start == NULL) {
+    if (*start == NULL) {
         *start = newNode;
-    } else {
-        lastNode = *start;
-        while(lastNode->next != NULL) {
-            lastNode = lastNode->next;
-        }
-        lastNode->next = newNode;
-        newNode->back = lastNode;
+        return newNode;
     }
+    
+    while (lastNode->next != NULL) {
+        lastNode = lastNode->next;
+    }
+    
+    lastNode->next = newNode;
+    newNode->back = lastNode;
     
     return newNode;
 }
 
-void InsNode(struct studentNode *now, const char n[], int a, float g) {
-    struct studentNode *newNode;
-    
-    if(now == NULL) return;
-    
-    newNode = (struct studentNode*)malloc(sizeof(struct studentNode));
-    strcpy(newNode->name, n);
-    newNode->age = a;
-    newNode->gpa = g;
-    newNode->next = now;
-    newNode->back = now->back;
-    
-    if(now->back != NULL) {
-        now->back->next = newNode;
+void InsNode(struct studentNode *currentNode, const char name[], int age, float gpa) {
+    if (currentNode == NULL) {
+        return;
     }
-    now->back = newNode;
+    
+    struct studentNode *newNode = (struct studentNode*)malloc(sizeof(struct studentNode));
+    
+    strcpy(newNode->name, name);
+    newNode->age = age;
+    newNode->gpa = gpa;
+    newNode->next = currentNode;
+    newNode->back = currentNode->back;
+    
+    if (currentNode->back != NULL) {
+        currentNode->back->next = newNode;
+    }
+    
+    currentNode->back = newNode;
 }
 
-void GoBack(struct studentNode **now) {
-    if(*now != NULL && (*now)->back != NULL) {
-        *now = (*now)->back;
+void GoBack(struct studentNode **currentNode) {
+    if (*currentNode != NULL && (*currentNode)->back != NULL) {
+        *currentNode = (*currentNode)->back;
     }
 }
 
-void DelNode(struct studentNode **now) {
-    struct studentNode *temp;
-    
-    if(*now == NULL) return;
-    
-    temp = *now;
-    
-    if(temp->back != NULL) {
-        temp->back->next = temp->next;
+void DelNode(struct studentNode **currentNode) {
+    if (*currentNode == NULL) {
+        return;
     }
-    if(temp->next != NULL) {
-        temp->next->back = temp->back;
-        *now = temp->next;
-    } else if(temp->back != NULL) {
-        *now = temp->back;
+    
+    struct studentNode *nodeToDelete = *currentNode;
+    
+    if (nodeToDelete->back != NULL) {
+        nodeToDelete->back->next = nodeToDelete->next;
+    }
+    
+    if (nodeToDelete->next != NULL) {
+        nodeToDelete->next->back = nodeToDelete->back;
+        *currentNode = nodeToDelete->next;
+    } else if (nodeToDelete->back != NULL) {
+        *currentNode = nodeToDelete->back;
     } else {
-        *now = NULL;
+        *currentNode = NULL;
     }
     
-    free(temp);
+    free(nodeToDelete);
 }
