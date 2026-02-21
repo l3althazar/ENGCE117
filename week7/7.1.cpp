@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct studentNode {
     char name[20];
@@ -115,15 +115,22 @@ int main() {
     NewList listB;
     LinkedList *listC;
 
-    listA.InsNode((char*)"one", 1, 'A', 1.1);
-    listA.InsNode((char*)"two", 2, 'B', 2.2);
-    listA.InsNode((char*)"three", 3, 'C', 3.3);
+    char n1[] = "one";
+    char n2[] = "two";
+    char n3[] = "three";
+    char n4[] = "four";
+    char n5[] = "five";
+    char n6[] = "six";
+
+    listA.InsNode(n1, 1, 'A', 1.1);
+    listA.InsNode(n2, 2, 'B', 2.2);
+    listA.InsNode(n3, 3, 'C', 3.3);
     listA.GoNext();
     listA.ShowNode();
 
-    listB.InsNode((char*)"four", 4, 'D', 4.4);
-    listB.InsNode((char*)"five", 5, 'E', 5.5);
-    listB.InsNode((char*)"six", 6, 'F', 6.6);
+    listB.InsNode(n4, 4, 'D', 4.4);
+    listB.InsNode(n5, 5, 'E', 5.5);
+    listB.InsNode(n6, 6, 'F', 6.6);
     listB.GoNext();
     listB.DelNode();
     listB.ShowNode();
