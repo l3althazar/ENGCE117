@@ -1,19 +1,18 @@
-#include <iostream>
-#include <cstring>
-#include <iomanip>
-using namespace std;
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 struct studentNode {
     char name[20];
     int age;
     char sex;
     float gpa;
-    studentNode *next;
+    struct studentNode *next;
 };
 
 class LinkedList {
 protected:
-    studentNode *start, *now;
+    struct studentNode *start, *now;
 public:
     LinkedList();
     ~LinkedList();
@@ -35,16 +34,16 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::~LinkedList() {
-    studentNode *p = start;
+    struct studentNode *p = start;
     while (p != NULL) {
-        studentNode *tmp = p;
+        struct studentNode *tmp = p;
         p = p->next;
-        delete tmp;
+        free(tmp);
     }
 }
 
 void LinkedList::InsNode(char n[], int a, char s, float g) {
-    studentNode *p = new studentNode;
+    struct studentNode *p = (struct studentNode*)malloc(sizeof(struct studentNode));
     strcpy(p->name, n);
     p->age = a;
     p->sex = s;
@@ -55,7 +54,7 @@ void LinkedList::InsNode(char n[], int a, char s, float g) {
         start = p;
         now = start;
     } else {
-        studentNode *q = start;
+        struct studentNode *q = start;
         while (q->next != NULL)
             q = q->next;
         q->next = p;
@@ -66,16 +65,16 @@ void LinkedList::DelNode() {
     if (now == NULL) return;
 
     if (now == start) {
-        studentNode *tmp = start;
+        struct studentNode *tmp = start;
         start = start->next;
         now = start;
-        delete tmp;
+        free(tmp);
     } else {
-        studentNode *p = start;
+        struct studentNode *p = start;
         while (p->next != now)
             p = p->next;
         p->next = now->next;
-        delete now;
+        free(now);
         now = p->next;
     }
 }
@@ -87,11 +86,11 @@ void LinkedList::GoNext() {
 
 void LinkedList::ShowNode() {
     if (now != NULL) {
-        cout << now->name << " "
-             << now->age << " "
-             << now->sex << " "
-             << fixed << setprecision(2)
-             << now->gpa << endl;
+        printf("%s %d %c %.2f\n",
+               now->name,
+               now->age,
+               now->sex,
+               now->gpa);
     }
 }
 
@@ -102,13 +101,13 @@ void NewList::GoFirst() {
 void NewList::ShowNode() {
     if (start == NULL) return;
 
-    studentNode *first = start;
-    studentNode *last = start;
+    struct studentNode *first = start;
+    struct studentNode *last = start;
 
     while (last->next != NULL)
         last = last->next;
 
-    cout << last->name << " " << first->name << endl;
+    printf("%s %s\n", last->name, first->name);
 }
 
 int main() {
