@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* structure for each student node */
 struct studentNode {
     char name[20];
     int age;
@@ -12,11 +13,14 @@ struct studentNode {
 
 class LinkedList {
 protected:
-    struct studentNode *start, *now;
+    struct studentNode *head;
+    struct studentNode *current;
+
 public:
     LinkedList();
     ~LinkedList();
-    void InsNode(char n[], int a, char s, float g);
+
+    void InsNode(char studentName[], int studentAge, char studentSex, float studentGpa);
     void DelNode();
     void GoNext();
     virtual void ShowNode();
@@ -29,108 +33,135 @@ public:
 };
 
 LinkedList::LinkedList() {
-    start = NULL;
-    now = NULL;
+    head = NULL;
+    current = NULL;
 }
 
 LinkedList::~LinkedList() {
-    struct studentNode *p = start;
-    while (p != NULL) {
-        struct studentNode *tmp = p;
-        p = p->next;
-        free(tmp);
+    struct studentNode *tempNode = head;
+
+    while (tempNode != NULL) {
+        struct studentNode *deleteNode = tempNode;
+        tempNode = tempNode->next;
+        free(deleteNode);
     }
 }
 
-void LinkedList::InsNode(char n[], int a, char s, float g) {
-    struct studentNode *p = (struct studentNode*)malloc(sizeof(struct studentNode));
-    strcpy(p->name, n);
-    p->age = a;
-    p->sex = s;
-    p->gpa = g;
-    p->next = NULL;
+void LinkedList::InsNode(char studentName[], int studentAge, char studentSex, float studentGpa) {
 
-    if (start == NULL) {
-        start = p;
-        now = start;
-    } else {
-        struct studentNode *q = start;
-        while (q->next != NULL)
-            q = q->next;
-        q->next = p;
+    struct studentNode *newNode =
+        (struct studentNode*)malloc(sizeof(struct studentNode));
+
+    strcpy(newNode->name, studentName);
+    newNode->age = studentAge;
+    newNode->sex = studentSex;
+    newNode->gpa = studentGpa;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+        current = head;
+    }
+    else {
+        struct studentNode *lastNode = head;
+
+        while (lastNode->next != NULL) {
+            lastNode = lastNode->next;
+        }
+
+        lastNode->next = newNode;
     }
 }
 
 void LinkedList::DelNode() {
-    if (now == NULL) return;
 
-    if (now == start) {
-        struct studentNode *tmp = start;
-        start = start->next;
-        now = start;
-        free(tmp);
-    } else {
-        struct studentNode *p = start;
-        while (p->next != now)
-            p = p->next;
-        p->next = now->next;
-        free(now);
-        now = p->next;
+    if (current == NULL)
+        return;
+
+    if (current == head) {
+
+        struct studentNode *deleteNode = head;
+        head = head->next;
+        current = head;
+        free(deleteNode);
+    }
+    else {
+
+        struct studentNode *previousNode = head;
+
+        while (previousNode->next != current) {
+            previousNode = previousNode->next;
+        }
+
+        previousNode->next = current->next;
+        free(current);
+        current = previousNode->next;
     }
 }
 
 void LinkedList::GoNext() {
-    if (now != NULL && now->next != NULL)
-        now = now->next;
+
+    if (current != NULL && current->next != NULL) {
+        current = current->next;
+    }
 }
 
 void LinkedList::ShowNode() {
-    if (now != NULL) {
+
+    if (current != NULL) {
+
         printf("%s %d %c %.2f\n",
-               now->name,
-               now->age,
-               now->sex,
-               now->gpa);
+               current->name,
+               current->age,
+               current->sex,
+               current->gpa);
     }
 }
 
 void NewList::GoFirst() {
-    now = start;
+    current = head;
 }
 
+/* override function */
 void NewList::ShowNode() {
-    if (start == NULL) return;
 
-    struct studentNode *first = start;
-    struct studentNode *last = start;
+    if (head == NULL)
+        return;
 
-    while (last->next != NULL)
-        last = last->next;
+    struct studentNode *firstNode = head;
+    struct studentNode *lastNode  = head;
 
-    printf("%s %s\n", last->name, first->name);
+    while (lastNode->next != NULL) {
+        lastNode = lastNode->next;
+    }
+
+    printf("%s %s\n", lastNode->name, firstNode->name);
 }
 
 int main() {
+
     LinkedList listA;
     NewList listB;
     LinkedList *listC;
 
-    char n1[] = "one";
-    char n2[] = "two";
-    char n3[] = "three";
-    char n4[] = "four";
-    char n5[] = "five";
-    char n6[] = "six";
+    char one[]   = "one";
+    char two[]   = "two";
+    char three[] = "three";
+    char four[]  = "four";
+    char five[]  = "five";
+    char six[]   = "six";
 
-    listA.InsNode(n1, 1, 'A', 1.1);
-    listA.InsNode(n2, 2, 'B', 2.2);
-    listA.InsNode(n3, 3, 'C', 3.3);
+    listA.InsNode(one,   1, 'A', 1.1);
+    listA.InsNode(two,   2, 'B', 2.2);
+    listA.InsNode(three, 3, 'C', 3.3);
+
     listA.GoNext();
     listA.ShowNode();
 
-    listB.InsNode(n4, 4, 'D', 4.4);
-    listB.InsNode(n5, 5, 'E', 5.5);
-    listB.InsNode(n6, 6, 'F', 6.6);
+    listB.InsNode(four, 4, 'D', 4.4);
+    listB.InsNode(five, 5, 'E', 5.5);
+    listB.InsNode(six,  6, 'F', 6.6);
+
     listB.GoNext();
     listB.DelNode();
     listB.ShowNode();
