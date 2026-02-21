@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <cstdio>
 using namespace std;
 
 struct studentNode {
@@ -12,91 +13,89 @@ struct studentNode {
 
 class LinkedList {
     protected:
-        struct studentNode *start, **now;
+        struct studentNode *start;
+        struct studentNode **now;
+        
     public:
-        LinkedList();
-        ~LinkedList();
-        void InsNode(const char n[], int a, char s, float g);
-        void DelNode();
-        void GoNext();
-        virtual void ShowNode();
+        LinkedList() {
+            start = NULL;
+            now = &start;
+        }
+        
+        ~LinkedList() {
+            struct studentNode *current = start;
+            struct studentNode *temp;
+            while(current != NULL) {
+                temp = current;
+                current = current->next;
+                delete temp;
+            }
+        }
+        
+        void InsNode(const char studentName[], int studentAge, char studentSex, float studentGpa) {
+            struct studentNode *newNode = new studentNode;
+            struct studentNode *walker = start;
+            
+            strcpy(newNode->name, studentName);
+            newNode->age = studentAge;
+            newNode->sex = studentSex;
+            newNode->gpa = studentGpa;
+            newNode->next = NULL;
+            
+            if(start == NULL) {
+                start = newNode;
+                now = &start;
+                return;
+            }
+            
+            while(walker->next != NULL) {
+                walker = walker->next;
+            }
+            
+            walker->next = newNode;
+        }
+        
+        void DelNode() {
+            if(*now == NULL || (*now)->next == NULL) {
+                return;
+            }
+            
+            struct studentNode *nodeToDelete = (*now)->next;
+            (*now)->next = nodeToDelete->next;
+            delete nodeToDelete;
+        }
+        
+        void GoNext() {
+            if(*now != NULL && (*now)->next != NULL) {
+                now = &(*now)->next;
+            }
+        }
+        
+        virtual void ShowNode() {
+            if(*now != NULL) {
+                cout << (*now)->name << " " 
+                     << (*now)->age << " " 
+                     << (*now)->sex << " ";
+                printf("%.2f\n", (*now)->gpa);
+            }
+        }
 };
 
 class NewList : public LinkedList {
     public:
-        void GoFirst();
-        virtual void ShowNode();
-};
-
-LinkedList::LinkedList() {
-    start = NULL;
-    now = &start;
-}
-
-LinkedList::~LinkedList() {
-    struct studentNode *temp;
-    while(start != NULL) {
-        temp = start;
-        start = start->next;
-        delete temp;
-    }
-}
-
-void LinkedList::InsNode(const char n[], int a, char s, float g) {
-    struct studentNode *newNode = new studentNode;
-    struct studentNode *last = start;
-    
-    strcpy(newNode->name, n);
-    newNode->age = a;
-    newNode->sex = s;
-    newNode->gpa = g;
-    newNode->next = NULL;
-    
-    if(start == NULL) {
-        start = newNode;
-        now = &start;
-    } else {
-        while(last->next != NULL) {
-            last = last->next;
+        void GoFirst() {
+            now = &start;
         }
-        last->next = newNode;
-    }
-}
-
-void LinkedList::DelNode() {
-    struct studentNode *temp;
-    if(*now != NULL && (*now)->next != NULL) {
-        temp = (*now)->next;
-        (*now)->next = temp->next;
-        delete temp;
-    }
-}
-
-void LinkedList::GoNext() {
-    if(*now != NULL && (*now)->next != NULL) {
-        now = &(*now)->next;
-    }
-}
-
-void LinkedList::ShowNode() {
-    if(*now != NULL) {
-        cout << (*now)->name << " " << (*now)->age << " " << (*now)->sex << " ";
-        printf("%.2f\n", (*now)->gpa);
-    }
-}
-
-void NewList::GoFirst() {
-    now = &start;
-}
-
-void NewList::ShowNode() {
-    struct studentNode *temp = start;
-    while(temp != NULL) {
-        cout << temp->name << " ";
-        temp = temp->next;
-    }
-    cout << endl;
-}
+        
+        virtual void ShowNode() {
+            struct studentNode *traversal = start;
+            while(traversal != NULL) {
+                cout << traversal->name << " ";
+                traversal = traversal->next;
+            }
+            cout << endl;
+        }
+};
 
 int main() {
     LinkedList listA;
@@ -106,18 +105,20 @@ int main() {
     listA.InsNode("one", 1, 'A', 1.1);
     listA.InsNode("two", 2, 'B', 2.2);
     listA.InsNode("three", 3, 'C', 3.3);
+    
     listA.GoNext();
     listA.ShowNode();
 
     listB.InsNode("four", 4, 'D', 4.4);
     listB.InsNode("five", 5, 'E', 5.5);
     listB.InsNode("six", 6, 'F', 6.6);
+    
     listB.GoNext();
     listB.DelNode();
     listB.ShowNode();
 
     listC = &listA;
-    listC->GoNext();
+    listC->GoNext();   
     listC->ShowNode();
 
     listC = &listB;
