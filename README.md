@@ -183,10 +183,9 @@ Students are able to design efficient data structures, analyze algorithm complex
 ---
 
 ## 🏫 Computer Engineering  
-Chiang Mai Rajabhat University  
 
 <p align="center">
-  <i>"Engineering is precision, logic, and structure."</i>
+  <i>"Chiang Mai Rajabhat University"</i>
 </p>
 
 <p align="center">
