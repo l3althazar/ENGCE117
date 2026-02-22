@@ -16,8 +16,8 @@
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ╚██████╔╝   ██║   ███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝      ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
 
-      COMPUTER PROGRAMMING FOR COMPUTER ENGINEER
-                                         ENGCE117
+    COMPUTER PROGRAMMING FOR COMPUTER ENGINEER
+                                      ENGCE117
 </pre>
 
 ---
@@ -182,13 +182,11 @@ Students are able to design efficient data structures, analyze algorithm complex
 
 ---
 
-<p align="center">
-  ## 🏫 Computer Engineering  
+## 🏫 Computer Engineering  
 Chiang Mai Rajabhat University  
 
 <p align="center">
   <i>"Engineering is precision, logic, and structure."</i>
-</p>
 </p>
 
 <p align="center">
