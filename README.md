@@ -1,106 +1,59 @@
 <p align="center">
-  <img src="https://media.giphy.com/media/L8K62iTDkzGX6/giphy.gif" width="600">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f2027,100:2c5364&height=180&section=header&text=ENGCE117&fontSize=40&fontColor=ffffff&animation=fadeIn&fontAlignY=35"/>
 </p>
 
-<pre align="center">
- ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗   ██╗████████╗███████╗██████╗ 
-██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║   ██║╚══██╔══╝██╔════╝██╔══██╗
-██║     ██║   ██║██╔████╔██║██████╔╝██║   ██║   ██║   █████╗  ██████╔╝
-██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║   ██║   ██║   ██╔══╝  ██╔══██╗
-╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ╚██████╔╝   ██║   ███████╗██║  ██║
- ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝      ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
-
-      COMPUTER PROGRAMMING FOR COMPUTER ENGINEER
-                    ENGCE117
-</pre>
+<h1 align="center">Computer Programming for Computer Engineer</h1>
+<p align="center">Clean Code • Algorithmic Thinking • Engineering Mindset</p>
 
 ---
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Language-C%20%2F%20C++-blue">
-  <img src="https://img.shields.io/badge/Paradigm-OOP%20%7C%20Structured-green">
-  <img src="https://img.shields.io/badge/Algorithms-Advanced-orange">
-  <img src="https://img.shields.io/badge/Engineering-Level%20100-red">
-</p>
-
----
-
-# 💻 About This Course
+## 🧠 Course Overview
 
 รายวิชา **Computer Programming for Computer Engineer (ENGCE117)**  
-เน้นการพัฒนาแนวคิดเชิงวิศวกรรมและการเขียนโปรแกรมระดับลึก  
-ครอบคลุมทั้งโครงสร้างข้อมูล อัลกอริทึม และการออกแบบระบบ
+มุ่งเน้นการพัฒนาแนวคิดเชิงวิศวกรรม ผ่านการออกแบบอัลกอริทึม  
+การจัดการหน่วยความจำ และการพัฒนาโปรแกรมเชิงวัตถุอย่างเป็นระบบ
 
 ---
 
-# 🧠 What I Learned
+## 💻 Core Topics
 
-## 🔹 Memory & Pointer
-- Advanced Pointer
-- Pointer-to-pointer
-- Dynamic Memory Allocation
-- Memory Safety & Debugging
-
-## 🔹 Data Structure
-- Array & Structure
-- Singly / Doubly Linked List
-- Node Manipulation
-- File-based Data Persistence
-
-## 🔹 Object-Oriented Programming
-- Encapsulation
-- Inheritance
-- Polymorphism
-- Abstract Class
-
-## 🔹 Algorithms
-- Divide & Conquer
-- Binary Search O(log n)
-- Merge Sort O(n log n)
-- Greedy Algorithm
-- Dynamic Programming
-- Backtracking
-
-## 🔹 Numerical & Engineering Concepts
-- Bisection Method
-- Complexity Analysis
-- Problem Decomposition
-
-## 🔹 Software Engineering Practice
-- Clean Code
-- Modular Design
-- Debugging
-- Version Control (Git)
+- Advanced Pointer & Memory Management  
+- Data Structures (Array, Struct, Linked List)  
+- File Input / Output (ASCII Processing)  
+- Recursion & Divide-and-Conquer  
+- Object-Oriented Programming (OOP)  
+- Algorithm Design (Greedy, DP, Backtracking)  
+- Numerical Methods (Bisection Method)  
+- Software Testing & Version Control  
 
 ---
 
-# 🚀 Engineering Skills Developed
+## 🚀 Skills Developed
 
-✔ Logical Thinking  
-✔ Algorithm Analysis  
-✔ Memory Control  
-✔ Data Structure Design  
-✔ Systematic Debugging  
-✔ Software Development Workflow  
-
----
-
-# 📊 Sample Implementation
-
-- Student Management System (Linked List + File I/O)
-- Knapsack Problem (Greedy / DP)
-- Sorting & Searching Algorithms
-- Recursive Function Implementation
-- Numerical Root Finding System
+- Algorithm Analysis  
+- Clean & Modular Code Design  
+- Dynamic Memory Control  
+- Debugging & Problem Solving  
+- Git Workflow  
 
 ---
 
-# 🏫 Computer Engineering
-
-Chiang Mai Rajabhat University  
-
----
+## 📊 GitHub Statistics
 
 <p align="center">
-  <b>"Engineering is not just writing code — it is designing solutions."</b>
+  <img src="https://github-readme-stats.vercel.app/api?username=3althazar&show_icons=true&theme=tokyonight&hide_border=true" height="160"/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=3althazar&layout=compact&theme=tokyonight&hide_border=true" height="160"/>
+</p>
+
+---
+
+## 🏫 Computer Engineering  
+Chiang Mai Rajabhat University  
+
+<p align="center">
+  <i>"Engineering is precision, logic, and structure."</i>
+</p>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2c5364,100:0f2027&height=120&section=footer"/>
 </p>
