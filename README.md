@@ -4,9 +4,6 @@
 
 <h1 align="center">Computer Programming for Computer Engineer</h1>
 <p align="center">Structured Thinking • Algorithm Design • Engineering Discipline</p>
-
-<h1 align="center">Computer Programming for Computer Engineer</h1>
-<p align="center">Clean Code • Algorithmic Thinking • Engineering Mindset</p>
 <p align="center">
   <img src="https://media.giphy.com/media/L8K62iTDkzGX6/giphy.gif" width="600">
 </p>
