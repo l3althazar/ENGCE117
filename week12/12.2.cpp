@@ -2,58 +2,54 @@
 
 int *KnapsackGreedy( int *w, int *v, int n, int wx )
 {
-    int *selected = new int[ n ];
-    int index, j;
+    int *select = new int[n];
+    int i;
 
-    for ( index = 0; index < n; index++ )
-        selected[ index ] = 0;
+    for ( i = 0; i < n; i++ )
+        select[i] = 0;
 
-    for ( index = 0; index < n - 1; index++ )
+    int capacity = wx;
+
+    while ( 1 )
     {
-        for ( j = index + 1; j < n; j++ )
+        int bestIndex = -1;
+        double bestRatio = 0.0;
+
+        for ( i = 0; i < n; i++ )
         {
-            double r1 = (double)v[ index ] / w[ index ];
-            double r2 = (double)v[ j ] / w[ j ];
-
-            if ( r2 > r1 )
+            if ( select[i] == 0 && w[i] <= capacity )
             {
-                int temp;
+                double ratio = (double)v[i] / w[i];
 
-                temp = w[ index ];
-                w[ index ] = w[ j ];
-                w[ j ] = temp;
-
-                temp = v[ index ];
-                v[ index ] = v[ j ];
-                v[ j ] = temp;
+                if ( ratio > bestRatio )
+                {
+                    bestRatio = ratio;
+                    bestIndex = i;
+                }
             }
         }
+
+        if ( bestIndex == -1 )
+            break;
+
+        select[bestIndex] = 1;
+        capacity = capacity - w[bestIndex];
     }
 
-    int currentWeight = 0;
-
-    for ( index = 0; index < n; index++ )
-    {
-        if ( currentWeight + w[ index ] <= wx )
-        {
-            selected[ index ] = 1;
-            currentWeight += w[ index ];
-        }
-    }
-
-    return selected;
+    return select;
 }
 
 int main()
 {
     int n = 5, wx = 11;
-    int w[ 5 ] = { 1, 2, 5, 6, 7 };
-    int v[ 5 ] = { 1, 6, 18, 22, 28 };
+    int w[5] = { 1, 2, 5, 6, 7 };
+    int v[5] = { 1, 6, 18, 22, 28 };
 
     int *x = KnapsackGreedy( w, v, n, wx );
 
-    for ( int i = 0; i < n; i++ )
-        printf( "%d ", x[ i ] );
+    int i;
+    for ( i = 0; i < n; i++ )
+        printf( "%d ", x[i] );
 
     return 0;
 }
