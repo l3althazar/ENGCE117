@@ -5,22 +5,22 @@ long SumRecur( int );
 
 int main() {
 
-    printf( "SumLoop(n) = %d", SumLoop( 10 ) );
-    printf( "\nSumRecur(n) = %d", SumRecur( 10 ) );
+    printf( "SumLoop(n) = %ld\n", SumLoop( 10 ) );
+    printf( "SumRecur(n) = %ld", SumRecur( 10 ) );
 
     return 0;
 }
 
 long SumLoop( int n ) {
 
-    long sum = 0;
-    int i;
+    long total = 0;
+    int index;
 
-    for ( i = 1; i <= n; i++ ) {
-        sum += i;
+    for ( index = 1; index <= n; index++ ) {
+        total += index;
     }
 
-    return sum;
+    return total;
 }
 
 long SumRecur( int n ) {
