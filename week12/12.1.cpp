@@ -1,120 +1,75 @@
 #include <stdio.h>
-#include <stdlib.h>
-
-int *Dijkstra( int *L, int n );
-
-int main()
-{
-    int n = 5;
-    int rowIndex = 0;
-    int columnIndex = 0;
-    int *d;
-    int *g;
-
-    g = (int *)malloc( n * n * sizeof( int ) );
-
-    for ( rowIndex = 0; rowIndex < n; rowIndex++ )
-    {
-        for ( columnIndex = 0; columnIndex < n; columnIndex++ )
-        {
-            g[ rowIndex * n + columnIndex ] = -1;
-        }
-    }
-
-    g[ 0 * n + 1 ] = 100;
-    g[ 0 * n + 2 ] = 80;
-    g[ 0 * n + 3 ] = 30;
-    g[ 0 * n + 4 ] = 10;
-
-    g[ 1 * n + 2 ] = 20;
-    g[ 3 * n + 1 ] = 20;
-    g[ 3 * n + 2 ] = 20;
-    g[ 4 * n + 3 ] = 10;
-
-    d = Dijkstra( g, n );
-
-    for ( rowIndex = 0; rowIndex < n - 1; rowIndex++ )
-    {
-        printf( "%d ", d[ rowIndex ] );
-    }
-
-    free( g );
-    free( d );
-
-    return 0;
-}
 
 int *Dijkstra( int *L, int n )
 {
-    int *distance;
-    int *visited;
-    int nodeIndex;
-    int neighborIndex;
-    int minimumDistance;
-    int selectedNode;
-    int iteration;
+    int *d = new int[ n - 1 ];
+    int visited[ 5 ];
+    int i = 0, j = 0;
 
-    distance = (int *)malloc( ( n - 1 ) * sizeof( int ) );
-    visited = (int *)malloc( n * sizeof( int ) );
+    for ( i = 0; i < n; i++ )
+        visited[ i ] = 0;
 
-    for ( nodeIndex = 0; nodeIndex < n; nodeIndex++ )
-    {
-        visited[ nodeIndex ] = 0;
-    }
-
-    for ( nodeIndex = 1; nodeIndex < n; nodeIndex++ )
-    {
-        distance[ nodeIndex - 1 ] = L[ 0 * n + nodeIndex ];
-    }
+    for ( i = 1; i < n; i++ )
+        d[ i - 1 ] = L[ 0 * n + i ];
 
     visited[ 0 ] = 1;
 
-    for ( iteration = 1; iteration < n; iteration++ )
+    for ( i = 1; i < n; i++ )
     {
-        minimumDistance = 1000000;
-        selectedNode = -1;
+        int min = -1;
+        int u = -1;
 
-        for ( nodeIndex = 1; nodeIndex < n; nodeIndex++ )
+        for ( j = 1; j < n; j++ )
         {
-            if ( visited[ nodeIndex ] == 0 )
+            if ( visited[ j ] == 0 && d[ j - 1 ] != -1 )
             {
-                if ( distance[ nodeIndex - 1 ] != -1 &&
-                     distance[ nodeIndex - 1 ] < minimumDistance )
+                if ( min == -1 || d[ j - 1 ] < min )
                 {
-                    minimumDistance = distance[ nodeIndex - 1 ];
-                    selectedNode = nodeIndex;
+                    min = d[ j - 1 ];
+                    u = j;
                 }
             }
         }
 
-        if ( selectedNode == -1 )
-        {
+        if ( u == -1 )
             break;
-        }
 
-        visited[ selectedNode ] = 1;
+        visited[ u ] = 1;
 
-        for ( neighborIndex = 1; neighborIndex < n; neighborIndex++ )
+        for ( j = 1; j < n; j++ )
         {
-            if ( visited[ neighborIndex ] == 0 )
+            if ( visited[ j ] == 0 && L[ u * n + j ] != -1 )
             {
-                if ( L[ selectedNode * n + neighborIndex ] != -1 )
-                {
-                    int newDistance =
-                        minimumDistance +
-                        L[ selectedNode * n + neighborIndex ];
+                int newDist = min + L[ u * n + j ];
 
-                    if ( distance[ neighborIndex - 1 ] == -1 ||
-                         newDistance < distance[ neighborIndex - 1 ] )
-                    {
-                        distance[ neighborIndex - 1 ] = newDistance;
-                    }
-                }
+                if ( d[ j - 1 ] == -1 || newDist < d[ j - 1 ] )
+                    d[ j - 1 ] = newDist;
             }
         }
     }
 
-    free( visited );
+    return d;
+}
 
-    return distance;
+int main()
+{
+    int n = 5, i = 0, j = 0, *d, *g;
+
+    g = new int[ n * n ];
+
+    for ( i = 0; i < n; i++ )
+        for ( j = 0; j < n; j++ )
+            g[ i * n + j ] = -1;
+
+    g[ 0 * n + 1 ] = 100;  g[ 0 * n + 2 ] = 80;
+    g[ 0 * n + 3 ] = 30;   g[ 0 * n + 4 ] = 10;
+    g[ 1 * n + 2 ] = 20;   g[ 3 * n + 1 ] = 20;
+    g[ 3 * n + 2 ] = 20;   g[ 4 * n + 3 ] = 10;
+
+    d = Dijkstra( g, n );
+
+    for ( i = 0; i < n - 1; i++ )
+        printf( "%d ", d[ i ] );
+
+    return 0;
 }
