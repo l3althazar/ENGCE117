@@ -1,42 +1,47 @@
 #include <stdio.h>
 
-int BinSearch( int data[], int n, int find );
+int BinSearch( int dataArray[], int arraySize, int targetValue );
 
-int main() {
-
+int main()
+{
     int data[ 6 ] = { 1, 2, 3, 4, 5, 7 };
     int n = 6;
     int find = 5;
     int pos = BinSearch( data, n, find );
 
-    if ( pos != -1 ) {
+    if ( pos != -1 )
+    {
         printf( "Found %d at %d", find, pos );
     }
-    else {
+    else
+    {
         printf( "Not found" );
     }
 
     return 0;
 }
 
-int BinSearch( int data[], int n, int find ) {
+int BinSearch( int dataArray[], int arraySize, int targetValue )
+{
+    int leftIndex = 0;
+    int rightIndex = arraySize - 1;
+    int middleIndex;
 
-    int left = 0;
-    int right = n - 1;
-    int mid;
+    while ( leftIndex <= rightIndex )
+    {
+        middleIndex = ( leftIndex + rightIndex ) / 2;
 
-    while ( left <= right ) {
-
-        mid = ( left + right ) / 2;
-
-        if ( data[ mid ] == find ) {
-            return mid;
+        if ( dataArray[ middleIndex ] == targetValue )
+        {
+            return middleIndex;
         }
-        else if ( data[ mid ] < find ) {
-            left = mid + 1;
+        else if ( dataArray[ middleIndex ] < targetValue )
+        {
+            leftIndex = middleIndex + 1;
         }
-        else {
-            right = mid - 1;
+        else
+        {
+            rightIndex = middleIndex - 1;
         }
     }
 
