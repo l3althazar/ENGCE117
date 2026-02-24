@@ -1,75 +1,94 @@
 #include <stdio.h>
 
-int *Dijkstra( int *L, int n )
+#define INF 999999
+
+int findMinNode(int *distance, int *visited, int n)
 {
-    int *d = new int[ n - 1 ];
-    int visited[ 5 ];
-    int i = 0, j = 0;
+    int minValue = INF;
+    int minIndex = -1;
 
-    for ( i = 0; i < n; i++ )
-        visited[ i ] = 0;
-
-    for ( i = 1; i < n; i++ )
-        d[ i - 1 ] = L[ 0 * n + i ];
-
-    visited[ 0 ] = 1;
-
-    for ( i = 1; i < n; i++ )
+    for (int index = 0; index < n; index++)
     {
-        int min = -1;
-        int u = -1;
-
-        for ( j = 1; j < n; j++ )
+        if (!visited[index] && distance[index] < minValue)
         {
-            if ( visited[ j ] == 0 && d[ j - 1 ] != -1 )
-            {
-                if ( min == -1 || d[ j - 1 ] < min )
-                {
-                    min = d[ j - 1 ];
-                    u = j;
-                }
-            }
+            minValue = distance[index];
+            minIndex = index;
         }
+    }
 
-        if ( u == -1 )
+    return minIndex;
+}
+
+int *Dijkstra(int *graph, int n)
+{
+    int *distance = new int[n];
+    int *visited = new int[n];
+
+    for (int index = 0; index < n; index++)
+    {
+        distance[index] = INF;
+        visited[index] = 0;
+    }
+
+    distance[0] = 0;
+
+    for (int count = 0; count < n - 1; count++)
+    {
+        int currentNode = findMinNode(distance, visited, n);
+
+        if (currentNode == -1)
             break;
 
-        visited[ u ] = 1;
+        visited[currentNode] = 1;
 
-        for ( j = 1; j < n; j++ )
+        for (int neighbor = 0; neighbor < n; neighbor++)
         {
-            if ( visited[ j ] == 0 && L[ u * n + j ] != -1 )
-            {
-                int newDist = min + L[ u * n + j ];
+            int edgeWeight = graph[currentNode * n + neighbor];
 
-                if ( d[ j - 1 ] == -1 || newDist < d[ j - 1 ] )
-                    d[ j - 1 ] = newDist;
+            if (edgeWeight != -1 && !visited[neighbor])
+            {
+                int newDistance = distance[currentNode] + edgeWeight;
+
+                if (newDistance < distance[neighbor])
+                {
+                    distance[neighbor] = newDistance;
+                }
             }
         }
     }
 
-    return d;
+    int *result = new int[n - 1];
+
+    for (int index = 1; index < n; index++)
+        result[index - 1] = distance[index];
+
+    return result;
 }
 
 int main()
 {
-    int n = 5, i = 0, j = 0, *d, *g;
+    int n = 5;
+    int graphSize = n * n;
 
-    g = new int[ n * n ];
+    int *graph = new int[graphSize];
 
-    for ( i = 0; i < n; i++ )
-        for ( j = 0; j < n; j++ )
-            g[ i * n + j ] = -1;
+    for (int index = 0; index < graphSize; index++)
+        graph[index] = -1;
 
-    g[ 0 * n + 1 ] = 100;  g[ 0 * n + 2 ] = 80;
-    g[ 0 * n + 3 ] = 30;   g[ 0 * n + 4 ] = 10;
-    g[ 1 * n + 2 ] = 20;   g[ 3 * n + 1 ] = 20;
-    g[ 3 * n + 2 ] = 20;   g[ 4 * n + 3 ] = 10;
+    graph[0 * n + 1] = 100;
+    graph[0 * n + 2] = 80;
+    graph[0 * n + 3] = 30;
+    graph[0 * n + 4] = 10;
 
-    d = Dijkstra( g, n );
+    graph[1 * n + 2] = 20;
+    graph[3 * n + 1] = 20;
+    graph[3 * n + 2] = 20;
+    graph[4 * n + 3] = 10;
 
-    for ( i = 0; i < n - 1; i++ )
-        printf( "%d ", d[ i ] );
+    int *distance = Dijkstra(graph, n);
+
+    for (int index = 0; index < n - 1; index++)
+        printf("%d ", distance[index]);
 
     return 0;
 }
