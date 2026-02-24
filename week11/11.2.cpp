@@ -7,10 +7,11 @@ int main()
 {
     int data[ 7 ] = { 4, 6, 1, 2, 5, 1, 8 };
     int n = 7;
+    int index;
 
     mergesort( data, n );
 
-    for ( int index = 0; index < n; index++ )
+    for ( index = 0; index < n; index++ )
     {
         printf( "%d ", data[ index ] );
     }
@@ -25,63 +26,65 @@ void mergesort( int t[], int k )
         return;
     }
 
-    int middle = k / 2;
+    int middleIndex = k / 2;
+    int leftCount = middleIndex;
+    int rightCount = k - middleIndex;
 
-    int leftSize = middle;
-    int rightSize = k - middle;
+    int leftArray[ 100 ];
+    int rightArray[ 100 ];
 
-    int leftArray[ leftSize ];
-    int rightArray[ rightSize ];
+    int leftIndex;
+    int rightIndex;
 
-    for ( int leftIndex = 0; leftIndex < leftSize; leftIndex++ )
+    for ( leftIndex = 0; leftIndex < leftCount; leftIndex++ )
     {
         leftArray[ leftIndex ] = t[ leftIndex ];
     }
 
-    for ( int rightIndex = 0; rightIndex < rightSize; rightIndex++ )
+    for ( rightIndex = 0; rightIndex < rightCount; rightIndex++ )
     {
-        rightArray[ rightIndex ] = t[ middle + rightIndex ];
+        rightArray[ rightIndex ] = t[ middleIndex + rightIndex ];
     }
 
-    mergesort( leftArray, leftSize );
-    mergesort( rightArray, rightSize );
+    mergesort( leftArray, leftCount );
+    mergesort( rightArray, rightCount );
 
-    merge( leftArray, leftSize, rightArray, rightSize, t );
+    merge( leftArray, leftCount, rightArray, rightCount, t );
 }
 
 void merge( int *u, int m, int *v, int n, int *t )
 {
-    int leftIndex = 0;
-    int rightIndex = 0;
-    int mergedIndex = 0;
+    int leftPosition = 0;
+    int rightPosition = 0;
+    int mergePosition = 0;
 
-    while ( leftIndex < m && rightIndex < n )
+    while ( leftPosition < m && rightPosition < n )
     {
-        if ( u[ leftIndex ] <= v[ rightIndex ] )
+        if ( u[ leftPosition ] <= v[ rightPosition ] )
         {
-            t[ mergedIndex ] = u[ leftIndex ];
-            leftIndex++;
+            t[ mergePosition ] = u[ leftPosition ];
+            leftPosition++;
         }
         else
         {
-            t[ mergedIndex ] = v[ rightIndex ];
-            rightIndex++;
+            t[ mergePosition ] = v[ rightPosition ];
+            rightPosition++;
         }
 
-        mergedIndex++;
+        mergePosition++;
     }
 
-    while ( leftIndex < m )
+    while ( leftPosition < m )
     {
-        t[ mergedIndex ] = u[ leftIndex ];
-        leftIndex++;
-        mergedIndex++;
+        t[ mergePosition ] = u[ leftPosition ];
+        leftPosition++;
+        mergePosition++;
     }
 
-    while ( rightIndex < n )
+    while ( rightPosition < n )
     {
-        t[ mergedIndex ] = v[ rightIndex ];
-        rightIndex++;
-        mergedIndex++;
+        t[ mergePosition ] = v[ rightPosition ];
+        rightPosition++;
+        mergePosition++;
     }
 }
